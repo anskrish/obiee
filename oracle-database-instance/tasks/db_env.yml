@@ -1,0 +1,8 @@
+---
+- name: confure datbase env
+  shell: /apps/oracle/product/oracle_home/db/bin/oraenv
+  become_user: oracle
+  register: command_result
+
+- debug:
+    var: command_result

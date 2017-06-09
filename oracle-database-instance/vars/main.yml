@@ -1,0 +1,8 @@
+---
+# vars file for oracle-database-instance
+oracle_database_user: oracle
+oracle_database_install_group: middleware
+oracle_database_instance_already_created: false
+oracle_database_nuber_of_pdbs: 0
+oracle_database_create_container_database: false
+oracle_database_pdb_name:

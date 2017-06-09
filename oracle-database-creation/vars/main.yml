@@ -1,0 +1,13 @@
+---
+# vars file for oracle-database
+oracle_database_user: oracle
+oracle_database_install_group: middleware
+oracle_database_extra_groups: []
+# oracle_database_os_group: middleware
+# oracle_database_os_dba_group: dba
+
+oracle_database_inventory_location: "/apps/shared/oracle_inventory"
+oracle_database_oracle_base: "/apps/shared"
+oracle_database_oracle_home: "{{ oracle_database_oracle_base }}/products/oracle_home/db"
+oracle_database_source_home: "/apps"
+oracle_database_already_installed: false

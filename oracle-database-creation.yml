@@ -1,0 +1,8 @@
+---
+- name: test create instance oracle database 12c(12.1.0)
+  hosts: cli
+  roles:
+    - role: /root/obiee/oracle-database-creation
+      oracle_database_version: 12c # supported versions: [11g]
+      oracle_database_release: 12.1.0 # supported releases: [11.2.0.4]
+      oracle_database_edition: EE # supported editions: [SE,EE]

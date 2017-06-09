@@ -1,0 +1,28 @@
+---
+#
+- name:  unzip the oracle databae zip file
+  command: unzip linuxamd64_12102_database_1of2.zip
+  args:
+    chdir: /home/oracle/
+
+- name:  unzip the oracle databae zip file
+  command: unzip linuxamd64_12102_database_2of2.zip
+  args:
+    chdir: /home/oracle/
+- name: install pre-installation package
+  yum: name=oracle-rdbms-server-11gR2-preinstall
+  when: oracle_database_version == "11g"
+
+- name: install pre-installation package
+  yum: name=oracle-rdbms-server-12cR1-preinstall
+  when: oracle_database_version == "12c"
+
+- file:
+    path: "{{ item }}"
+    state: directory
+    owner: oracle
+    group: middleware
+  with_items:
+    - "{{ oracle_database_inventory_location }}"
+    - "{{ oracle_database_oracle_base }}"
+    - "{{ oracle_database_oracle_home }}"

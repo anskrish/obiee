@@ -1,0 +1,20 @@
+---
+# tasks file for oracle-database-instance
+- include: validate.yml
+  become: yes
+
+- include: configure-listener.yml
+  become: yes
+  become_user: "{{ oracle_database_user }}"
+  when: not oracle_database_instance_already_created
+
+- include: configure-instance.yml
+  become: yes
+  become_user: "{{ oracle_database_user }}"
+  when: not oracle_database_instance_already_created
+
+- include: configure-instance-service.yml
+  become: yes
+#- include: db_env.yml
+#  become: yes
+#  become_user: "{{ oracle_database_user }}"

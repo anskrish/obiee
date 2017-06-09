@@ -1,0 +1,5 @@
+---
+- hosts: cli
+  remote_user: root
+  roles:
+    - /root/obiee/oracle-database-instance
