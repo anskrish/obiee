@@ -1,0 +1,7 @@
+obi_sys_pass: 'SysPasswd1'
+obi_database_pass: 'raju'
+obi_database_hostname: '34.227.242.25'
+obi_database_name: 'ORADB'
+obi_weblogi_admin_pass: 'Admin123'
+obi_weblogi_admin_user: 'weblogic'
+obi_domain_path: '/apps/shared/config/domains'

@@ -1,0 +1,48 @@
+---
+- name: copy the rcu response file
+  template:
+    src: "rcu.properties.j2"
+    dest: "{{ weblogic.scripts_dir }}/rcu.properties"
+  become: yes
+  become_user: "{{ oracle.user }}"
+- name: Prepare commande for rcu in silent mode
+  set_fact:
+    rcu_install_command: "{{ oracle.middleware_dir }}/oracle_common/bin/rcu -silent -createRepository -connectString {{obi_database_hostname }}:1521/{{ obi_database_name }} -dbUser SYS -dbRole SYSDBA -useSamePasswordForAllSchemaUsers true -schemaPrefix BI122120 -component STB -component IAU_APPEND -component OPSS -component UCSUMS -component BIPLATFORM -component IAU -component MDS -component IAU_VIEWER -component WLS < {{ weblogic.scripts_dir }}/rcu.properties"
+
+- name: rcu
+  shell: "{{ rcu_install_command }}"
+  become_user: oracle
+  register: command_result
+- name: rcu results
+  debug:
+    var: command_result
+- name: Prepare installation response file
+  template:
+    src: "obi-config.rsp.j2"
+    dest: "{{ weblogic.scripts_dir }}/obi-config.rsp"
+  delegate_to: "{{obi_database_hostname }}"
+  #become: yes
+  #become_user: "{{ oracle.user }}"
+- name: chnage the permission of the response file
+  command: "chown -R {{ oracle.user }}.{{ oracle.group }} {{ weblogic.scripts_dir }}/obi-config.rsp"
+- name: change the permission for tmp directory
+  file:
+    path: /tmp
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.group }}"
+    mode: 0775
+    recurse: yes
+  become: yes
+  become_user: root
+- name: Prepare commande for rcu in silent mode
+  set_fact:
+    obiee_config_command: "{{ oracle.middleware_dir }}/bi/bin/config.sh -silent -responseFile {{ weblogic.scripts_dir }}/obi-config.rsp -invPtrLoc {{ oracle.middleware_dir }}/oraInst.loc"
+- name: configure obiee
+  shell: "{{ obiee_config_command }}"
+  become: yes
+  become_user: "{{ oracle.user }}"
+  register: command_result1
+- name: obi-config results
+  debug:
+    var: command_result1
+

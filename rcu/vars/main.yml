@@ -1,0 +1,18 @@
+oracle_base_path: '/apps/shared'
+
+oracle:
+  user: oracle
+  group: middleware
+  inventory_path: "{{ oracle_base_path }}/inventory"
+  home_dir: '/home/oracle'
+  domain_home: "{{ oracle_base_path }}/config/domains"
+  middleware_dir: "{{ oracle_base_path }}/products/oracle_home"
+
+weblogic:
+  supported_versions: ['11g', '12c']
+  home_dir: "{{ oracle.middleware_dir }}/wlserver"
+  scripts_dir: "{{ oracle.home_dir }}/scripts"
+  download_dir: '/srv/files'
+  logs_dir: "{{ oracle.home_dir }}/logs"
+  install_response_file: "/tmp/wls.rsp"
+
